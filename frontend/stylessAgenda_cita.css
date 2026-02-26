@@ -1,0 +1,275 @@
+/* Reset general */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Body: fondo gris claro */
+body {
+  background-color: #f2f2f2;
+  color: #333;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Header */
+.header {
+  background-color: #1f2937;
+  padding: 20px 0;
+}
+
+/* Contenedor header */
+.header-container {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo img {
+  width: 80px;
+  height: auto;
+}
+
+/* Texto header */
+.header-text {
+  text-align: center;
+  color: #f2f2f2;
+}
+
+.header-text h1 {
+  margin: 0;
+}
+
+.header-text p {
+  margin: 4px 0 0;
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+/* Navegación */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  color: #f2f2f2;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Main: formulario centrado con sombra */
+main {
+  max-width: 700px;
+  background-color: #ffffff;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(31, 41, 51, 0.08);
+}
+
+main h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1f2933;
+}
+
+/* Mensaje de estado */
+#message {
+  margin-bottom: 12px;
+  min-height: 20px;
+  font-weight: 600;
+}
+
+.status {
+  color: #0b6;
+}
+
+.error {
+  color: #b00;
+}
+
+/* Formulario: columna flexible */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+label {
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+input,
+select,
+button {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: #fff;
+}
+
+input:focus,
+select:focus,
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  border-color: #2563eb;
+}
+
+/* Inputs de fecha y hora */
+input[type="date"],
+input[type="time"] {
+  max-width: 220px;
+}
+
+/* Fila para fecha y hora */
+.row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.col {
+  flex: 1;
+}
+
+.col.small {
+  width: 160px;
+}
+
+/* Botón submit */
+button[type="submit"] {
+  margin-top: 8px;
+  padding: 10px 14px;
+  background-color: #2563eb;
+  color: #f2f2f2;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #1e40af;
+}
+
+/* Lista de citas */
+#listaCitas h3 {
+  margin-top: 18px;
+  margin-bottom: 10px;
+  color: #1f2933;
+}
+
+#citasList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+#citasList p {
+  color: #666;
+  padding: 8px 0;
+}
+
+/* Item de cita */
+#citasList li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.meta div:first-child {
+  font-weight: 700;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta div:last-child {
+  font-size: 0.9rem;
+  color: #4b5563;
+  margin-top: 4px;
+}
+
+/* Botones de acción */
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.actions button {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.actions button:hover {
+  background: #f3f4f6;
+}
+
+.actions .editar {
+  color: #0b6;
+  border-color: rgba(11, 102, 0, 0.12);
+}
+
+.actions .eliminar {
+  color: #b00;
+  border-color: rgba(176, 0, 0, 0.08);
+}
+
+/* Indicador de edición */
+.editing-indicator {
+  font-size: 0.9rem;
+  color: #055;
+  margin-left: 8px;
+}
+
+/* Footer */
+footer {
+  background-color: #1f2933;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 15px 0;
+  margin-top: 30px;
+}
+
+/* Responsive: ajustes para pantallas pequeñas */
+@media (max-width: 520px) {
+  nav ul { gap: 10px; flex-wrap: wrap; }
+  main { margin: 20px 12px; padding: 18px; }
+  .row { flex-direction: column; }
+  input[type="date"], input[type="time"] { width: 100%; }
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Meta para codificación y responsive -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grandstate Customs | Agendar Cita</title>
+  <!-- Enlace al CSS -->
+  <link rel="stylesheet" href="stylessAgenda_cita.css" />
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-container">
+
+    <!-- Logo -->
+    <div class="logo">
+      <img src="Logo.png" alt="Logo Grandstate Customs">
+    </div>
+
+    <!-- Texto -->
+    <div class="header-text">
+      <h1>Grandstate Customs</h1>
+      <p>Mecánica inteligente</p>
+    </div>
+
+    <!-- Navegación -->
+    <nav>
+      <ul>
+        <li><a href="Inicio_taller.html">Inicio</a></li>
+        <li><a href="Servicios.html">Servicios</a></li>
+        <li><a href="Agenda_cita.html">Agendar Cita</a></li>
+        <li><a href="Contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
+
+  </div>
+</header>
+
+<!-- Main: formulario y lista de citas -->
+<main>
+  <h2>Agenda tu cita</h2>
+
+  <!-- Mensaje de estado -->
+  <div id="message" aria-live="polite"></div>
+
+  <!-- Formulario para agendar/editar cita -->
+  <form id="citaForm" novalidate>
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required />
+
+    <label for="telefono">Teléfono:</label>
+    <input type="tel" id="telefono" name="telefono" inputmode="numeric" required />
+
+    <label for="servicio">Servicio:</label>
+    <select id="servicio" name="servicio" required>
+      <option value="">-- Selecciona --</option>
+      <option value="Mantenimiento">Mantenimiento</option>
+      <option value="Cambio de aceite">Cambio de aceite</option>
+      <option value="Diagnóstico">Diagnóstico</option>
+    </select>
+
+    <!-- Fila para fecha y hora -->
+    <div class="row">
+      <div class="col">
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha" required />
+      </div>
+      <div class="col small">
+        <label for="hora">Hora:</label>
+        <input type="time" id="hora" name="hora" required />
+      </div>
+    </div>
+
+    <!-- Botón submit y indicador de edición -->
+    <div style="margin-top:10px;">
+      <button id="submitBtn" type="submit">Confirmar cita</button>
+      <span id="editingIndicator" class="editing-indicator" hidden>Modo edición</span>
+    </div>
+  </form>
+
+  <!-- Sección de lista de citas -->
+  <section id="listaCitas">
+    <h3>Citas Agendadas</h3>
+    <ul id="citasList"></ul>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer>
+  <p>&copy; 2026 Grandstate Customs</p>
+</footer>
+
+<!-- Script JS para manejo de citas -->
+<script src="ScripMecanico.js" defer></script>
+
+</body>
+</html>
