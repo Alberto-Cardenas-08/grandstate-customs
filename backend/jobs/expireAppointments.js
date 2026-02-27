@@ -1,4 +1,3 @@
-// Tarea simple para expirar citas programadas en el pasado
 const Appointment = require('../models/Appointment');
 
 const expireAppointments = async () => {

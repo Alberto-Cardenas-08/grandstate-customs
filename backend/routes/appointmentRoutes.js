@@ -1,10 +1,10 @@
 const express = require('express');
 const Appointment = require('../models/Appointment');
-const { protect, admin } = require('../middleware/auth');
+const { protect } = require('../middleware/auth');
 
 const router = express.Router();
 
-// Crear cita (usuario autenticado)
+// Crear cita
 router.post('/', protect, async (req, res) => {
   try {
     const { service, date, hour, scheduledAt } = req.body;
@@ -12,7 +12,12 @@ router.post('/', protect, async (req, res) => {
       return res.status(400).json({ msg: 'Faltan campos obligatorios' });
     }
 
-    // Crear scheduledAt si no viene
+    // Validar intervalos de media hora
+    const [hh, mm] = hour.split(':').map(Number);
+    if (mm !== 0 && mm !== 30) {
+      return res.status(400).json({ msg: 'Solo se pueden agendar citas cada media hora.' });
+    }
+
     const scheduled = scheduledAt ? new Date(scheduledAt) : new Date(`${date}T${hour}:00`);
 
     const appointment = new Appointment({
@@ -47,13 +52,31 @@ router.get('/', protect, async (req, res) => {
   }
 });
 
-// Marcar llegada (cambia status a 'arrived')
+// Historial de citas (expired o arrived)
+router.get('/history', protect, async (req, res) => {
+  try {
+    let history;
+    if (req.user.role === 'admin') {
+      history = await Appointment.find({ status: { $in: ['expired', 'arrived'] } })
+        .populate('user', 'email')
+        .populate('parts', 'name');
+    } else {
+      history = await Appointment.find({ user: req.user.id, status: { $in: ['expired', 'arrived'] } })
+        .populate('parts', 'name');
+    }
+    res.json(history);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Error en servidor' });
+  }
+});
+
+// Marcar llegada
 router.put('/:id/arrive', protect, async (req, res) => {
   try {
     const appointment = await Appointment.findById(req.params.id);
     if (!appointment) return res.status(404).json({ msg: 'Cita no encontrada' });
 
-    // Solo admin o el propietario pueden marcar llegada
     if (req.user.role !== 'admin' && appointment.user.toString() !== req.user.id) {
       return res.status(403).json({ msg: 'Acceso denegado' });
     }
@@ -61,49 +84,6 @@ router.put('/:id/arrive', protect, async (req, res) => {
     appointment.status = 'arrived';
     await appointment.save();
     res.json(appointment);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ msg: 'Error en servidor' });
-  }
-});
-
-// Editar cita (admin o propietario)
-router.put('/:id', protect, async (req, res) => {
-  try {
-    const appointment = await Appointment.findById(req.params.id);
-    if (!appointment) return res.status(404).json({ msg: 'Cita no encontrada' });
-
-    if (req.user.role !== 'admin' && appointment.user.toString() !== req.user.id) {
-      return res.status(403).json({ msg: 'Acceso denegado' });
-    }
-
-    const { service, date, hour, scheduledAt, status } = req.body;
-    if (service) appointment.service = service;
-    if (date) appointment.date = date;
-    if (hour) appointment.hour = hour;
-    if (scheduledAt) appointment.scheduledAt = new Date(scheduledAt);
-    if (status && ['scheduled','arrived','expired','cancelled'].includes(status)) appointment.status = status;
-
-    await appointment.save();
-    res.json(appointment);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ msg: 'Error en servidor' });
-  }
-});
-
-// Eliminar cita (admin o propietario)
-router.delete('/:id', protect, async (req, res) => {
-  try {
-    const appointment = await Appointment.findById(req.params.id);
-    if (!appointment) return res.status(404).json({ msg: 'Cita no encontrada' });
-
-    if (req.user.role !== 'admin' && appointment.user.toString() !== req.user.id) {
-      return res.status(403).json({ msg: 'Acceso denegado' });
-    }
-
-    await appointment.remove();
-    res.json({ msg: 'Cita eliminada' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'Error en servidor' });
