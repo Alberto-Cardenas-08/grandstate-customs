@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel de Administrador - Citas</title>
+  <link rel="stylesheet" href="Admin_panel.css">
+  
+</head>
+
+<body>
+  <header>
+    <h1>Panel Admin — Gestión de Citas</h1>
+    <div class="right">
+      <a class="secondary" href="Inicio_taller.html">Volver a Inicio</a>
+      <button class="danger" id="logoutBtn">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="toolbar">
+      <div class="left">
+        <button id="btnActive">Citas Activas</button>
+        <button id="btnHistory" class="secondary">Historial</button>
+        <button id="btnRefresh" class="btn-refresh">Refrescar</button>
+      </div>
+
+      <div class="right">
+        <input id="searchInput" type="text" placeholder="Buscar por servicio, correo o fecha...">
+      </div>
+    </div>
+
+    <div id="message"></div>
+
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Servicio</th>
+            <th>Fecha/Hora</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+
+    <p class="muted" style="margin-top:10px;">
+      * “Citas Activas” muestra principalmente <b>scheduled</b>. El historial viene del endpoint de admin.
+    </p>
+  </main>
+
+  <!-- auth.js debe existir (para checkAuth y logout). Si no, dime y lo ajusto -->
+  <script src="auth.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

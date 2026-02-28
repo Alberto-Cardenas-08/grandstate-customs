@@ -42,12 +42,49 @@ document.addEventListener('DOMContentLoaded', () => {
     return null;
   }
 
+  // ✅ NUEVO: Validar horario del taller (Lun–Sáb 09:00–18:00) y bloques de 30 min
+  function validarHorarioTaller(fecha, hora) {
+    const dt = new Date(`${fecha}T${hora}`);
+    if (isNaN(dt.getTime())) return 'Fecha u hora inválida.';
+
+    // 0 domingo, 1 lunes ... 6 sábado
+    const day = dt.getDay();
+    if (day === 0) return 'No se atiende los domingos. Elige lunes a sábado.';
+
+    const [h, m] = hora.split(':').map(Number);
+    const minutes = h * 60 + m;
+
+    const start = 9 * 60;   // 09:00
+    const end = 18 * 60;    // 18:00 (incluye 18:00 exacto)
+
+    if (minutes < start || minutes > end) {
+      return 'Horario inválido. Atendemos de 09:00 a 18:00 (lunes a sábado).';
+    }
+
+    // Bloques exactos de 30 min
+    if (minutes % 30 !== 0) {
+      return 'Selecciona una hora en bloques de 30 minutos (ej. 09:00, 09:30, 10:00).';
+    }
+
+    return null;
+  }
+
   // Helpers para llamadas al backend
   function getToken() {
     return localStorage.getItem('token');
   }
 
-  async function crearCitaBackend({ service, date, hour }) {
+  // ✅ helper de rol
+  function getRole() {
+    return localStorage.getItem('role'); // debe existir desde login/auth.js
+  }
+
+  function isAdmin() {
+    return getRole() === 'admin';
+  }
+
+  // ✅ CAMBIO #1: ahora recibe y manda nombre + telefono
+  async function crearCitaBackend({ nombre, telefono, service, date, hour }) {
     const token = getToken();
     const scheduledAt = new Date(`${date}T${hour}`).toISOString();
     const res = await fetch(`${API_BASE}/appointments`, {
@@ -56,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Content-Type': 'application/json',
         'Authorization': token ? `Bearer ${token}` : ''
       },
-      body: JSON.stringify({ service, date, hour, scheduledAt })
+      body: JSON.stringify({ nombre, telefono, service, date, hour, scheduledAt })
     });
     return res;
   }
@@ -174,18 +211,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      // Editar (solo si es tuya o admin; aquí abrimos el formulario con datos locales)
+      // Editar
       const editarBtn = document.createElement('button');
       editarBtn.type = 'button';
       editarBtn.className = 'editar';
       editarBtn.textContent = 'Editar';
       editarBtn.addEventListener('click', () => {
-        // Cargar datos en formulario para editar
         document.getElementById('nombre').value = cita.nombre || '';
         document.getElementById('telefono').value = cita.telefono || '';
         document.getElementById('servicio').value = cita.service || cita.servicio || '';
         const d = new Date(cita.scheduledAt);
-        // Formato YYYY-MM-DD y HH:MM
         const yyyy = d.getFullYear();
         const mm = String(d.getMonth() + 1).padStart(2, '0');
         const dd = String(d.getDate()).padStart(2, '0');
@@ -234,6 +269,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Cargar y renderizar desde backend
   async function loadAndRender() {
+    // ✅ seguridad extra: si no es admin, no listar
+    if (!isAdmin()) return;
+
     try {
       const data = await fetchCitasBackend();
       renderCitasFromServer(data);
@@ -260,33 +298,48 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Si editingId es null -> crear, si no -> editar
+      // ✅ NUEVO: validar horario del taller (lunes a sábado, 09:00-18:00, 30 min)
+      const errorHorario = validarHorarioTaller(fecha, hora);
+      if (errorHorario) {
+        showMessage(errorHorario, true);
+        return;
+      }
+
+      // Crear o editar
       if (!editingId) {
         try {
-          const res = await crearCitaBackend({ service: servicio, date: fecha, hour: hora });
+          // ✅ CAMBIO #2: mandamos nombre y telefono al backend
+          const res = await crearCitaBackend({ nombre, telefono, service: servicio, date: fecha, hour: hora });
+
           const data = await res.json().catch(() => ({}));
           if (res.ok) {
             showMessage('¡Cita agendada con éxito!');
             resetFormState();
-            await loadAndRender();
+
+            // ✅ solo admin refresca listado
+            if (isAdmin()) await loadAndRender();
           } else {
-            showMessage(data.msg || 'Error al agendar cita', true);
+            showMessage((data.msg || 'Error al agendar cita') + (data.error ? `: ${data.error}` : ''), true);
           }
         } catch (e) {
           console.error(e);
           showMessage('Error al agendar cita', true);
         }
       } else {
-        // Editar cita existente
         try {
           const scheduledAt = new Date(`${fecha}T${hora}`).toISOString();
-          const payload = { service: servicio, date: fecha, hour: hora, scheduledAt };
+
+          // ✅ CAMBIO #3: payload incluye nombre y telefono
+          const payload = { nombre, telefono, service: servicio, date: fecha, hour: hora, scheduledAt };
+
           const res = await editCitaBackend(editingId, payload);
           const data = await res.json().catch(() => ({}));
           if (res.ok) {
             showMessage('¡Cita editada con éxito!');
             resetFormState();
-            await loadAndRender();
+
+            // ✅ solo admin refresca listado
+            if (isAdmin()) await loadAndRender();
           } else {
             showMessage(data.msg || 'Error editando cita', true);
           }
@@ -320,15 +373,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Auto-refresh cada minuto para reflejar expiradas y cambios
-  setInterval(loadAndRender, 60 * 1000);
+  // ✅ Auto-refresh cada minuto SOLO si admin
+  setInterval(() => {
+    if (isAdmin()) loadAndRender();
+  }, 60 * 1000);
 
   // Inicial
   (async function init() {
-    // Si no hay token, avisar que algunas acciones requieren login
-    if (!getToken()) {
+    const token = getToken();
+
+    // Si no hay token, no listar
+    if (!token) {
       showMessage('Inicia sesión para agendar y gestionar citas.');
+      if (citasList) citasList.innerHTML = '';
+      return;
     }
+
+    // ✅ Si no es admin, no listar (y limpia la lista si existiera)
+    if (!isAdmin()) {
+      if (citasList) citasList.innerHTML = '';
+      showMessage('Tu cita se registrará correctamente. La gestión e historial es solo para administradores.');
+      return;
+    }
+
+    // ✅ Admin sí lista
     await loadAndRender();
   })();
 });

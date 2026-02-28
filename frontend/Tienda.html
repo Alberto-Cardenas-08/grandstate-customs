@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tienda | Grandstate Customs</title>
+
+  <link rel="stylesheet" href="stylessTienda.css">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container navbar">
+      <a class="brand" href="Inicio.html">
+        <div class="logo">
+          <img src="Logo.png" alt="Grandstate Customs Logo">
+        </div>
+        <div>
+          <div class="title">Grandstate Customs</div>
+          <div class="subtitle">Tienda</div>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="Inicio_taller.html">Inicio</a>
+        <a href="Servicios.html">Servicios</a>
+        <a href="Contacto.html">Contacto</a>
+        <a href="Tienda.html" class="active">Tienda</a>
+        <a href="carrito.html">Carrito <span id="cartCount" class="badge">0</span></a>
+        <a id="adminItem" href="Admin_panel.html" style="display:none;">Panel Admin</a>
+        <a href="Login.html" class="logout-btn" onclick="logout()">Cerrar sesión</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container hero-card">
+      <div class="hero-top">
+        <div>
+          <h1 class="hero-title">Tienda</h1>
+          <p class="hero-desc">Agrega productos al carrito y gestiona el catálogo si eres administrador.</p>
+        </div>
+      </div>
+
+      <div class="pills">
+        <span class="pill">Pago rápido</span>
+        <span class="pill">Stock en tiempo real</span>
+        <span class="pill">Panel admin</span>
+      </div>
+
+      <div class="shop-toolbar">
+        <input id="searchInput" class="input" placeholder="Buscar producto por nombre...">
+        <select id="sortSelect" class="input">
+          <option value="default">Ordenar</option>
+          <option value="priceAsc">Precio ↑</option>
+          <option value="priceDesc">Precio ↓</option>
+        </select>
+        <a class="btn btn-primary" href="carrito.html">Ir al carrito</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <!-- ✅ Panel Admin: Agregar producto -->
+    <div id="adminPanel" class="card admin-panel" style="display:none;">
+      <p class="admin-title">Acciones de administrador</p>
+
+      <form id="productForm" class="admin-form">
+        <input id="pName" class="input" type="text" placeholder="Nombre del producto" required>
+        <input id="pPrice" class="input" type="number" min="0" step="0.01" placeholder="Precio" required>
+        <input id="pStock" class="input" type="number" min="0" step="1" placeholder="Stock" required>
+        <input id="pImage" class="input" type="text" placeholder="URL de imagen (opcional)">
+        <button class="btn btn-primary" type="submit">Guardar producto</button>
+      </form>
+
+      <p id="adminMsg" style="margin-top:10px; color:#6b7280;"></p>
+    </div>
+
+    <section id="productList" class="grid-products"></section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© Grandstate Customs</div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script src="tienda.js"></script>
+
+  <!-- =========================
+     MODAL EDITAR PRODUCTO (ADMIN)
+     ========================= -->
+<div id="editModal" class="modal-overlay" style="display:none;">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2 class="modal-title">Editar producto</h2>
+      <button class="modal-close" type="button" onclick="closeEditModal()">✕</button>
+    </div>
+
+    <form id="editProductForm" class="modal-form">
+      <input type="hidden" id="editId">
+
+      <label class="modal-label">Nombre</label>
+      <input id="editName" class="input" type="text" required>
+
+      <div class="modal-grid">
+        <div>
+          <label class="modal-label">Precio</label>
+          <input id="editPrice" class="input" type="number" min="0" step="0.01" required>
+        </div>
+        <div>
+          <label class="modal-label">Stock</label>
+          <input id="editStock" class="input" type="number" min="0" step="1" required>
+        </div>
+      </div>
+
+      <label class="modal-label">Imagen (URL)</label>
+      <input id="editImage" class="input" type="text" placeholder="https://...">
+
+      <label class="modal-label">Descripción</label>
+      <textarea id="editDesc" class="input modal-textarea" rows="4" placeholder="Descripción del producto..."></textarea>
+
+      <p id="editMsg" class="modal-msg"></p>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeEditModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+  <script>
+    checkAuth();
+    updateCartCount();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const role = localStorage.getItem("role");
+      const adminItem = document.getElementById("adminItem");
+      if (adminItem && role === "admin") adminItem.style.display = "list-item";
+    });
+  </script>
+</body>
+</html>

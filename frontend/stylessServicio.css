@@ -1,4 +1,4 @@
-/* Reset general para eliminar márgenes y paddings predeterminados, y establecer box-sizing para un layout consistente. */
+/* Reset general */
 * {
   margin: 0;
   padding: 0;
@@ -6,110 +6,219 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Estilo del body: fondo gris claro y texto oscuro para un tema limpio. */
-body {
-  background-color: #f2f2f2;
-  color: #333;
+:root{
+  --bg: #f2f2f2;
+  --text: #333;
+  --dark: #1f2933;
+  --dark2: #1f2937;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --blue: #2563eb;
+  --shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
-/* Header: fondo oscuro para contraste con el contenido. */
-.header {
-  background-color: #1f2937;
-  padding: 20px 0;
-}
-
-/* Contenedor del header: centra el contenido y distribuye elementos horizontalmente. */
-.header-container {
-  width: 90%;
-  margin: auto;
+/* ✅ Para que NO quede hueco blanco y el footer se vaya abajo */
+body{
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
-/* Logo: tamaño fijo para la imagen del logo. */
+/* Header pro (igual al inicio) */
+.header {
+  background-color: var(--dark2);
+  color: white;
+  width: 100%;
+  padding: 18px 0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.header-container {
+  width: 92%;
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 16px;
+}
+
 .logo img {
-  width: 80px;
+  width: 78px;
   height: auto;
 }
 
-/* Texto del header: centrado y con opacidad para el subtítulo. */
-.header-text {
-  text-align: center;
+.header-text{
+  text-align: left;
   color: white;
 }
-
 .header-text h1 {
+  font-size: 1.25rem;
   margin: 0;
+  letter-spacing: 0.5px;
 }
-
 .header-text p {
-  margin: 4px 0 0;
+  margin-top: 4px;
   font-size: 0.95rem;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
-/* Navegación: lista horizontal sin bullets, con espacio entre items. */
+/* nav */
 nav ul {
   list-style: none;
   display: flex;
   gap: 18px;
+  align-items: center;
   margin: 0;
 }
 
-nav a {
-  color: #f2f2f2;
+.nav-link{
+  color: white;
   text-decoration: none;
   font-weight: bold;
-}
-
-nav a:hover {
-  text-decoration: underline;
-}
-
-/* Main: contenedor principal centrado con fondo gris y bordes redondeados. */
-main {
-  max-width: 600px;
-  background-color: #f2f2f2;
-  margin: 40px auto;
-  padding: 30px;
+  padding: 10px 10px;
   border-radius: 8px;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+.nav-link:hover{
+  background: rgba(255,255,255,0.12);
+}
+.nav-link.active{
+  background: rgba(37,99,235,0.22);
+  border: 1px solid rgba(37,99,235,0.35);
+}
+
+/* badge carrito */
+.cart-badge{
+  display:inline-block;
+  min-width:18px;
+  padding:2px 6px;
+  margin-left:6px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  color:#fff;
+  background:#dc2626;
+  line-height:1.2;
+  text-align:center;
+}
+
+/* botón logout */
+.logout-btn{
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.10);
+  color: white;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+.logout-btn:hover{
+  background: rgba(255,255,255,0.18);
+  transform: translateY(-1px);
+}
+
+/* Main */
+main{
+  width: 92%;
+  max-width: 1200px;
+  margin: 28px auto 36px;
   text-align: center;
+  flex: 1; /* ✅ empuja footer hacia abajo */
 }
 
-main h2 {
-  margin-bottom: 20px;
+main h2{
+  margin-bottom: 18px;
+  font-size: 2rem;
+  color: var(--dark);
 }
 
-/* Footer: fondo oscuro y texto centrado. */
-footer {
-  background-color: #1f2933;
+/* Grid de servicios */
+.servicios{
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Tarjeta (✅ borde más visible + bordado superior) */
+.servicio{
+  background-color: var(--card);
+  border: 2px solid #dbe2ea;         /* ✅ borde más notorio */
+  border-top: 5px solid var(--blue);  /* ✅ “bordado” pro */
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  text-align: left;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.servicio:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 16px 35px rgba(0,0,0,0.12);
+}
+
+/* Imagen consistente */
+.servicio img{
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ✅ Título debajo de la imagen, bonito */
+.servicio h3{
+  padding: 14px 14px 8px;
+  font-size: 1.1rem;
+  color: var(--dark);
+}
+
+/* Descripción */
+.servicio-desc{
+  padding: 0 14px 16px;
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* Footer (✅ ya no deja hueco) */
+footer{
+  background-color: var(--dark);
   color: #f2f2f2;
   text-align: center;
   padding: 15px 0;
+  margin-top: auto; /* ✅ clave para el “espacio blanco” */
 }
 
-/* Sección de servicios: grid para distribuir tarjetas. */
-.servicios {
-  display: grid;
-  gap: 25px;
+/* Responsive */
+@media (max-width: 1100px){
+  .servicios{ grid-template-columns: repeat(2, 1fr); }
 }
 
-/* Cada servicio: tarjeta con fondo blanco, sombra y bordes redondeados. */
-.servicio {
-  background-color: #ffffff;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+@media (max-width: 980px){
+  .header-container{
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto;
+  }
+  nav{
+    grid-column: 1 / -1;
+  }
+  nav ul{
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .logout-btn{
+    justify-self: end;
+  }
 }
 
-.servicio h3 {
-  margin-bottom: 12px;
-}
-
-.servicio img {
-  width: 100%;
-  max-height: 220px;
-  object-fit: cover;
-  border-radius: 6px;
+@media (max-width: 650px){
+  .servicios{ grid-template-columns: 1fr; }
 }

@@ -4,30 +4,47 @@ const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
-// Registro (para crear usuarios/admins)
+// ================= REGISTRO =================
 router.post('/register', async (req, res) => {
-  const { email, password, role } = req.body;
-  try {
-    let user = await User.findOne({ email });
-    if (user) return res.status(400).json({ msg: 'Usuario existe' });
+  const { name, email, password } = req.body; // ❌ quitamos role
 
-    user = new User({ email, password, role });
+  try {
+    if (!name || !email || !password) {
+      return res.status(400).json({ msg: 'Faltan campos (name, email, password)' });
+    }
+
+    let user = await User.findOne({ email: email.toLowerCase().trim() });
+    if (user) {
+      return res.status(400).json({ msg: 'Usuario ya existe' });
+    }
+
+    user = new User({
+      name: name.trim(),
+      email: email.toLowerCase().trim(),
+      password,
+      role: "user" // 🔥 FORZAMOS que siempre sea user
+    });
+
     await user.save();
 
     const payload = { id: user.id, role: user.role };
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.json({ token });
+    res.status(201).json({ token });
+
   } catch (err) {
-    res.status(500).json({ msg: 'Error en servidor' });
+    console.error("REGISTER ERROR:", err);
+    res.status(500).json({ msg: 'Error en servidor', error: err.message });
   }
 });
 
-// Login
+// ================= LOGIN =================
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
+
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
+
     if (!user || !(await user.matchPassword(password))) {
       return res.status(401).json({ msg: 'Credenciales inválidas' });
     }
@@ -36,8 +53,10 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     res.json({ token });
+
   } catch (err) {
-    res.status(500).json({ msg: 'Error en servidor' });
+    console.error("LOGIN ERROR:", err);
+    res.status(500).json({ msg: 'Error en servidor', error: err.message });
   }
 });
 

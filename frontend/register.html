@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro | Grandstate Customs</title>
+  <link rel="stylesheet" href="stylessLogin.css">
+</head>
+<body>
+
+  <div class="login-container">
+    <form id="registerForm" class="login-form">
+      <h2>Crear cuenta</h2>
+
+      <input type="text" id="name" placeholder="Nombre completo" required>
+      <input type="email" id="email" placeholder="Correo electrónico" required>
+      <input type="password" id="password" placeholder="Contraseña" required>
+
+      <button type="submit">Registrarse</button>
+
+      <p class="switch-link">
+        ¿Ya tienes cuenta?
+        <a href="Login.html">Inicia sesión</a>
+      </p>
+
+      <p id="mensaje"></p>
+    </form>
+  </div>
+
+  <script src="register.js"></script>
+</body>
+</html>

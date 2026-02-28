@@ -10,31 +10,38 @@
 </head>
 <body>
 
-<!-- Header -->
 <header class="header">
   <div class="header-container">
 
-    <!-- Logo -->
     <div class="logo">
       <img src="Logo.png" alt="Logo Grandstate Customs">
     </div>
 
-    <!-- Texto -->
     <div class="header-text">
       <h1>Grandstate Customs</h1>
       <p>Mecánica inteligente</p>
     </div>
 
-    <!-- Navegación -->
     <nav>
       <ul>
-        <li><a href="Inicio_taller.html">Inicio</a></li>
-        <li><a href="Servicios.html">Servicios</a></li>
-        <li><a href="Agenda_cita.html">Agendar Cita</a></li>
-        <li><a href="Contacto.html">Contacto</a></li>
+        <li><a class="nav-link" href="Inicio_taller.html">Inicio</a></li>
+        <li><a class="nav-link" href="Servicios.html">Servicios</a></li>
+        <li><a class="nav-link active" href="Agenda_cita.html">Agendar Cita</a></li>
+        <li><a class="nav-link" href="Contacto.html">Contacto</a></li>
+        <li><a class="nav-link" href="Tienda.html">Tienda</a></li>
+        <li>
+            <a class="nav-link" href="carrito.html">
+              Carrito <span id="cartCount" class="cart-badge" style="display:none;">0</span>
+            </a>
+        </li>
+
+        <li id="adminItem" style="display:none;">
+       <a class="nav-link" href="Admin_panel.html">Panel Admin</a>
+       </li>
       </ul>
     </nav>
 
+    <button class="logout-btn" onclick="logout()">Cerrar sesión</button>
   </div>
 </header>
 
@@ -69,7 +76,7 @@
       </div>
       <div class="col small">
         <label for="hora">Hora:</label>
-        <input type="time" id="hora" name="hora" required />
+        <input type="time" id="hora" name="hora" min="09:00" max="18:00" step="1800" required />
       </div>
     </div>
 
@@ -81,10 +88,15 @@
   </form>
 
   <!-- Sección de lista de citas -->
-  <section id="listaCitas">
-    <h3>Citas Agendadas</h3>
-    <ul id="citasList"></ul>
-  </section>
+  <section id="listaCitas" style="display:none;">
+      <h3>Citas Agendadas</h3>
+      <ul id="citasList"></ul>
+   </section>
+
+<section id="userNotice" style="display:none;">
+  <h3>Información</h3>
+  <p>Tu cita se registró correctamente. El historial y gestión de citas es solo para administradores.</p>
+</section>
 </main>
 
 <!-- Footer -->
@@ -95,5 +107,33 @@
 <!-- Script JS para manejo de citas -->
 <script src="ScripMecanico.js" defer></script>
 
+<script src="auth.js"></script>
+
+<script>
+  checkAuth();
+  updateCartCount(); // ✅ contador carrito
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const role = localStorage.getItem("role");
+    const adminItem = document.getElementById("adminItem");
+
+    if (adminItem && role === "admin") {
+      adminItem.style.display = "list-item";
+    }
+  });
+</script>
+
+ <script>
+  // Mostrar lista solo si admin
+  const role = localStorage.getItem("role");
+  const lista = document.getElementById("listaCitas");
+  const notice = document.getElementById("userNotice");
+
+  if (role === "admin") {
+    lista.style.display = "block";
+  } else {
+    notice.style.display = "block";
+  }
+ </script>
 </body>
 </html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Carrito | Grandstate Customs</title>
+
+  <link rel="stylesheet" href="stylesscarrito.css">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container navbar">
+      <a class="brand" href="Inicio.html">
+        <div class="logo">
+          <img src="Logo.png" alt="Grandstate Customs Logo">
+        </div>
+        <div>
+          <div class="title">Grandstate Customs</div>
+          <div class="subtitle">Carrito</div>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="Inicio.html">Inicio</a>
+        <a href="Servicios.html">Servicios</a>
+        <a href="Contacto.html">Contacto</a>
+        <a href="Tienda.html">Tienda</a>
+        <a href="carrito.html">Carrito <span id="cartCount" class="badge">0</span></a>
+        <a id="adminItem" href="Admin_panel.html" style="display:none;">Panel Admin</a>
+        <a href="Login.html" onclick="logout()">Cerrar sesión</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="container hero-card">
+      <h1 class="hero-title">Tu carrito</h1>
+      <p class="hero-desc">Ajusta cantidades, elimina productos y revisa tu total.</p>
+    </div>
+  </section>
+
+  <main class="container cart-layout">
+    <section id="cartItems" class="card cart-list"></section>
+
+    <aside class="card summary">
+      <h3>Resumen</h3>
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span id="subtotalText">$0</span>
+      </div>
+      <div class="summary-row">
+        <span>Envío</span>
+        <span>$0</span>
+      </div>
+      <div class="summary-total">
+        <span>Total</span>
+        <span id="totalText">$0</span>
+      </div>
+
+      <div class="summary-actions">
+        <a class="btn btn-primary" href="Tienda.html">Seguir comprando</a>
+      </div>
+
+      <!-- ✅ SOLO UN BOTÓN DE CHECKOUT -->
+      <button class="btn btn-primary" onclick="checkout()">
+        Finalizar compra
+      </button>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© Grandstate Customs</div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script src="carrito.js"></script>
+
+  <script>
+    checkAuth();
+    updateCartCount();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const role = localStorage.getItem("role");
+      const adminItem = document.getElementById("adminItem");
+      if (adminItem && role === "admin") adminItem.style.display = "list-item";
+    });
+  </script>
+</body>
+</html>
