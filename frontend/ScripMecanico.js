@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const submitBtn = document.getElementById('submitBtn') || (form && form.querySelector('button[type="submit"]'));
   const editingIndicator = document.getElementById('editingIndicator');
 
-  const API_BASE = 'https://grandstate-customs-nai9-lq8n3u1an-alberto-cardenas-08s-projects.vercel.app'; // ajustar si el backend está en otra URL
+  const API_BASE = 'https://grandstate-customs-nai9.vercel.app/api'; // ajustar si el backend está en otra URL
 
   function showMessage(text, isError = false) {
     if (!messageEl) return;
