@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const submitBtn = document.getElementById('submitBtn') || (form && form.querySelector('button[type="submit"]'));
   const editingIndicator = document.getElementById('editingIndicator');
 
-  const API_BASE = 'http://localhost:5000/api'; // ajustar si el backend está en otra URL
+  const API_BASE = 'grandstate-customs-nai9.vercel.app/api'; // ajustar si el backend está en otra URL
 
   function showMessage(text, isError = false) {
     if (!messageEl) return;

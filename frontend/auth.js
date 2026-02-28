@@ -75,7 +75,7 @@ async function updateCartCount() {
   }
 
   try {
-    const res = await fetch("http://localhost:5000/api/cart", {
+    const res = await fetch("grandstate-customs-nai9.vercel.app/api/cart", {
       headers: { Authorization: `Bearer ${token}` }
     });
 
