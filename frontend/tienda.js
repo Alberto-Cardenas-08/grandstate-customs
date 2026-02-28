@@ -5,7 +5,7 @@
 // - Admin: Eliminar
 // - Admin: Editar con MODAL bonito (PUT /api/products/:id)
 
-const API = "https://grandstate-customs-nai9.vercel.app/api";
+const API = "https://grandstate-customs-nai9-lq8n3u1an-alberto-cardenas-08s-projects.vercel.app/api";
 let allProducts = [];
 
 document.addEventListener("DOMContentLoaded", () => {

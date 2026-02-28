@@ -1,5 +1,5 @@
 // carrito.js FIXED
-const API = "https://grandstate-customs-nai9.vercel.app/api";
+const API = "https://grandstate-customs-nai9-lq8n3u1an-alberto-cardenas-08s-projects.vercel.app/api";
 
 document.addEventListener("DOMContentLoaded", loadCart);
 
@@ -140,7 +140,7 @@ async function removeItem(id) {
 async function checkout() {
   const token = localStorage.getItem("token");
 
-  const res = await fetch("https://grandstate-customs-nai9.vercel.app/api/checkout", {
+  const res = await fetch("https://grandstate-customs-nai9-lq8n3u1an-alberto-cardenas-08s-projects.vercel.app/api/checkout", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`

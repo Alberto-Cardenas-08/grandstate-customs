@@ -6,7 +6,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
   const password = document.getElementById("password").value;
 
   try {
-    const res = await fetch("https://grandstate-customs-nai9.vercel.app/api/auth/register", {
+    const res = await fetch("https://grandstate-customs-nai9-lq8n3u1an-alberto-cardenas-08s-projects.vercel.app/api/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
