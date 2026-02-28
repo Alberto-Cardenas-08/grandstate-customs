@@ -57,8 +57,8 @@ function checkAuth() {
 function logout() {
   localStorage.removeItem("token");
   localStorage.removeItem("role");
-  // redirigir al login (mayúscula según tu preferencia)
-  window.location.href = "Login.html";
+  // redirigir al registrar (mayúscula según tu preferencia)
+  window.location.href = "index.html";
 }
 
 async function updateCartCount() {
