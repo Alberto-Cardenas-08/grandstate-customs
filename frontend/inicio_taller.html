@@ -1,0 +1,234 @@
+<!-- inicio_taller.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grandstate Customs | Inicio</title>
+  <link rel="stylesheet" href="stylessInicio_Taller.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
+
+      <div class="logo">
+        <img src="Logo.png" alt="Logo Grandstate Customs">
+      </div>
+
+      <div class="header-text">
+        <h1>Grandstate Customs</h1>
+        <p>Mecánica inteligente</p>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a class="nav-link active" href="inicio_taller.html">Inicio</a></li>
+          <li><a class="nav-link" href="Servicios.html">Servicios</a></li>
+          <li><a class="nav-link" href="Agenda_cita.html">Agendar Cita</a></li>
+          <li><a class="nav-link" href="Contacto.html">Contacto</a></li>
+          <li><a class="nav-link" href="Tienda.html">Tienda</a></li>
+
+          <li>
+            <a class="nav-link" href="carrito.html">
+              Carrito <span id="cartCount" class="cart-badge" style="display:none;">0</span>
+            </a>
+          </li>
+
+          <!-- Panel Admin -->
+          <li id="adminItem" style="display:none;">
+            <a class="nav-link" href="Admin_panel.html">Panel Admin</a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="auth-buttons">
+        <a href="Login.html" class="btn">Iniciar Sesión</a>
+        <a href="index.html" class="btn btn-outline">Registrarse</a>
+      </div>
+
+      <!-- Usar la función logout() central en auth.js -->
+      <button class="logout-btn" onclick="logout()" style="display:none;">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main class="main">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="badge-row">
+            <span class="badge">Diagnóstico profesional</span>
+            <span class="badge">Citas rápidas</span>
+            <span class="badge">Trabajo garantizado</span>
+          </div>
+
+          <h2>Bienvenido a <span class="brand-accent">Grandstate Customs</span></h2>
+
+          <div class="hero-media hero-media-inline">
+            <div class="hero-image">
+              <img src="Auto-foto.jpeg" alt="Auto en mantenimiento">
+            </div>
+
+            <div class="media-caption">
+              <strong>Calidad visible.</strong> Cuidamos cada detalle: desde el diagnóstico hasta la entrega.
+            </div>
+          </div>
+
+          <p class="lead">
+            Somos un taller mecánico moderno que combina experiencia, herramientas de diagnóstico y atención personalizada.
+            Aquí tu auto recibe mantenimiento confiable, reparaciones bien hechas y un servicio claro (sin sorpresas).
+          </p>
+
+          <div class="cta-row">
+            <a class="btn-primary" href="Agenda_cita.html">Agendar una cita</a>
+            <a class="btn-secondary" href="Servicios.html">Ver servicios</a>
+          </div>
+
+          <div class="quick-info">
+            <div class="qi-card">
+              <div class="qi-title">Atención</div>
+              <div class="qi-text">Lun–Sáb · 9:00–18:00</div>
+            </div>
+            <div class="qi-card">
+              <div class="qi-title">Enfoque</div>
+              <div class="qi-text">Seguridad · Rendimiento · Estética</div>
+            </div>
+            <div class="qi-card">
+              <div class="qi-title">Especialidad</div>
+              <div class="qi-text">Clásicos · Hot Rods · Custom</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3>¿Por qué elegirnos?</h3>
+      <p class="section-subtitle">
+        Trabajamos con procesos claros: revisamos, explicamos, presupuestamos y ejecutamos.
+        Tu vehículo siempre está en manos responsables.
+      </p>
+
+      <div class="cards">
+        <article class="card">
+          <h4>Diagnóstico y revisión</h4>
+          <p>
+            Identificamos la causa real del problema para evitar reparaciones innecesarias.
+            Te explicamos qué se hará y por qué.
+          </p>
+        </article>
+
+        <article class="card">
+          <h4>Servicio confiable</h4>
+          <p>
+            Cuidamos tiempos y calidad. Si algo no conviene, te lo decimos.
+            Buscamos soluciones seguras y duraderas.
+          </p>
+        </article>
+
+        <article class="card">
+          <h4>Personalización / Restauración</h4>
+          <p>
+            Si tu proyecto es un clásico o un custom, podemos ayudarte con mejoras, ajustes y trabajo detallado.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="split">
+        <div>
+          <h3>Servicios más comunes</h3>
+          <p class="section-subtitle">
+            Ideal para mantenimiento preventivo o revisión general. Agenda y llega con tranquilidad.
+          </p>
+
+          <ul class="checklist">
+            <li>Servicio general (aceite, filtros, revisión)</li>
+            <li>Frenos (balatas, discos y revisión)</li>
+            <li>Suspensión (amortiguadores y alineación)</li>
+            <li>Diagnóstico de motor y fallas</li>
+            <li>Revisión antes de viaje</li>
+          </ul>
+
+          <a class="btn-primary" href="Agenda_cita.html">Quiero agendar</a>
+        </div>
+
+        <div class="info-box">
+          <h4>Consejo del taller</h4>
+          <p>
+            El mantenimiento preventivo reduce fallas inesperadas y te ahorra dinero.
+            Si notas ruidos, vibraciones o testigos en el tablero, lo mejor es revisarlo a tiempo.
+          </p>
+          <div class="mini-grid">
+            <div class="mini">
+              <span class="mini-top">Transparencia</span>
+              <span class="mini-bot">Presupuesto claro</span>
+            </div>
+            <div class="mini">
+              <span class="mini-top">Cuidado</span>
+              <span class="mini-bot">Detalles y limpieza</span>
+            </div>
+            <div class="mini">
+              <span class="mini-top">Seguridad</span>
+              <span class="mini-bot">Tu auto confiable</span>
+            </div>
+            <div class="mini">
+              <span class="mini-top">Soporte</span>
+              <span class="mini-bot">Te asesoramos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta-final">
+      <h3>¿Listo para traer tu auto?</h3>
+      <p class="section-subtitle">
+        Agenda tu cita en minutos y asegura atención. Si tienes dudas, revisa nuestros servicios o contáctanos.
+      </p>
+      <div class="cta-row center">
+        <a class="btn-primary" href="Agenda_cita.html">Agendar cita</a>
+        <a class="btn-secondary" href="Contacto.html">Contacto</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Grandstate Customs</p>
+  </footer>
+
+  <script src="auth.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      if (typeof updateCartCount === "function") {
+        updateCartCount();
+      }
+
+      const token = localStorage.getItem("token");
+      const role = localStorage.getItem("role");
+
+      const authButtons = document.querySelector(".auth-buttons");
+      const logoutBtn = document.querySelector(".logout-btn");
+      const adminItem = document.getElementById("adminItem");
+
+      // defaults
+      if (authButtons) authButtons.style.display = "flex";
+      if (logoutBtn) logoutBtn.style.display = "none";
+
+      // si está logueado: ocultar login/register y mostrar logout
+      if (token) {
+        if (authButtons) authButtons.style.display = "none";
+        if (logoutBtn) logoutBtn.style.display = "inline-block";
+
+        if (adminItem && role === "admin") {
+          adminItem.style.display = "list-item";
+        }
+      }
+    });
+  </script>
+</body>
+</html>

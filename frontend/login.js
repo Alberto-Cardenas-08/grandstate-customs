@@ -47,7 +47,7 @@ form.addEventListener("submit", async (e) => {
         mensaje.style.color = "green";
 
         setTimeout(() => {
-            window.location.href = "index.html";
+            window.location.href = "inicio_taller.html";
         }, 1000);
 
     } catch (error) {
