@@ -1,5 +1,4 @@
 // auth.js
-
 function parseJwt(token) {
   try {
     const base64Url = token.split(".")[1];
@@ -27,7 +26,7 @@ function saveRoleFromToken() {
   const payload = parseJwt(token);
   if (!payload) return null;
 
-  // opcional: validar expiración
+  // validar expiración
   if (payload.exp && Date.now() >= payload.exp * 1000) {
     logout();
     return null;
@@ -49,25 +48,24 @@ function isAdmin() {
 function checkAuth() {
   const token = getToken();
   if (!token) {
-    window.location.href = "Login.html";
+    window.location.href = "Login.html"; // mayúscula según tu preferencia
     return;
   }
-  // Asegura que el role exista en localStorage
   saveRoleFromToken();
 }
 
 function logout() {
   localStorage.removeItem("token");
   localStorage.removeItem("role");
-
-  // ✅ Redirigir al registro en vez del login
-  window.location.href = "Register.html"; // o "register.html" según tu archivo real
+  // redirigir al login (mayúscula según tu preferencia)
+  window.location.href = "Login.html";
 }
+
 async function updateCartCount() {
   const badge = document.getElementById("cartCount");
   if (!badge) return;
 
-  const token = localStorage.getItem("token");
+  const token = getToken();
   if (!token) {
     badge.style.display = "none";
     badge.textContent = "0";
@@ -80,7 +78,6 @@ async function updateCartCount() {
     });
 
     if (!res.ok) {
-      // si falla, no rompemos la UI
       badge.style.display = "none";
       badge.textContent = "0";
       return;
@@ -89,7 +86,6 @@ async function updateCartCount() {
     const cart = await res.json();
     const items = Array.isArray(cart?.items) ? cart.items : [];
 
-    // suma total de cantidades
     const totalQty = items.reduce((acc, it) => acc + (Number(it.quantity) || 0), 0);
 
     if (totalQty > 0) {

@@ -44,11 +44,12 @@
       </nav>
 
       <div class="auth-buttons">
-        <a href="login.html" class="btn">Iniciar Sesión</a>
-        <a href="register.html" class="btn btn-outline">Registrarse</a>
+        <a href="Login.html" class="btn">Iniciar Sesión</a>
+        <a href="Register.html" class="btn btn-outline">Registrarse</a>
       </div>
 
-      <button class="logout-btn" onclick="logout()">Cerrar sesión</button>
+      <!-- Usar la función logout() central en auth.js -->
+      <button class="logout-btn" onclick="logout()" style="display:none;">Cerrar sesión</button>
     </div>
   </header>
 
@@ -65,7 +66,6 @@
 
           <h2>Bienvenido a <span class="brand-accent">Grandstate Customs</span></h2>
 
-          <!-- ✅ IMAGEN MOVIDA DEBAJO DEL TÍTULO -->
           <div class="hero-media hero-media-inline">
             <div class="hero-image">
               <img src="Auto-foto.jpeg" alt="Auto en mantenimiento">
@@ -104,7 +104,6 @@
       </div>
     </section>
 
-    <!-- SECCIÓN “POR QUÉ NOS ELIGEN” -->
     <section class="section">
       <h3>¿Por qué elegirnos?</h3>
       <p class="section-subtitle">
@@ -138,7 +137,6 @@
       </div>
     </section>
 
-    <!-- SECCIÓN “SERVICIOS RÁPIDOS” -->
     <section class="section section-alt">
       <div class="split">
         <div>
@@ -186,7 +184,6 @@
       </div>
     </section>
 
-    <!-- CTA FINAL -->
     <section class="section cta-final">
       <h3>¿Listo para traer tu auto?</h3>
       <p class="section-subtitle">
@@ -205,10 +202,8 @@
 
   <script src="auth.js"></script>
 
-  <!-- ✅ Script único (sin duplicados) -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // contador carrito
       if (typeof updateCartCount === "function") {
         updateCartCount();
       }

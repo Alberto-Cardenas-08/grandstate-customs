@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Panel de Administrador - Citas</title>
   <link rel="stylesheet" href="Admin_panel.css">
-  
 </head>
 
 <body>
@@ -14,7 +13,8 @@
     <h1>Panel Admin — Gestión de Citas</h1>
     <div class="right">
       <a class="secondary" href="index.html">Volver a Inicio</a>
-      <button class="danger" id="logoutBtn">Cerrar sesión</button>
+      <!-- Llamar a logout() central -->
+      <button class="danger" onclick="logout()">Cerrar sesión</button>
     </div>
   </header>
 
@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <div id="message"></div>
+    <div id="message" style="display:none;"></div>
 
     <div class="card">
       <table>
@@ -53,7 +53,6 @@
     </p>
   </main>
 
-  <!-- auth.js debe existir (para checkAuth y logout). Si no, dime y lo ajusto -->
   <script src="auth.js"></script>
   <script src="admin.js"></script>
 </body>
