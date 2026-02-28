@@ -31,4 +31,8 @@ app.listen(PORT, () => {
 // Ejecutar job de expiración cada minuto
 setInterval(expireAppointments, 60 * 1000);
 
+app.get('/', (req, res) => {
+  res.send('Backend Grandstate Customs funcionando 🚀');
+});
+
 module.exports = app;
