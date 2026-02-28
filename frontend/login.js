@@ -1,3 +1,4 @@
+// login.js
 const form = document.getElementById("loginForm");
 const mensaje = document.getElementById("mensaje");
 
