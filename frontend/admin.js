@@ -1,6 +1,6 @@
 // admin.js - versión actualizada mostrando nombre y teléfono
 document.addEventListener("DOMContentLoaded", () => {
-  const API_BASE = "grandstate-customs-nai9.vercel.app/api";
+  const API_BASE = "https://grandstate-customs-nai9.vercel.app/api";
 
   const rows = document.getElementById("rows");
   const messageEl = document.getElementById("message");
