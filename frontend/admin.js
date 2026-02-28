@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (getRole() !== "admin") {
       alert("Acceso denegado. Esta sección es solo para administradores.");
-      window.location.href = "Inicio_taller.html";
+      window.location.href = "index.html";
     }
   }
 
